@@ -1,6 +1,6 @@
 <?php
 session_start();
-require "db_conn.php";
+require "config.php";
  // Include Composer autoload file
 
 if (isset($_POST['uname']) && isset($_POST['password']) && isset($_POST['re_password'])) {
