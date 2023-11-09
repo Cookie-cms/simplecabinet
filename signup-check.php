@@ -3,7 +3,7 @@ session_start();
 include "db_conn.php";
 
 if (isset($_POST['uname']) && isset($_POST['password'])
-    && isset($_POST['name']) && isset($_POST['re_password'])) {
+     && isset($_POST['re_password'])) {
 
 	function validate($data){
        $data = trim($data);
@@ -16,9 +16,8 @@ if (isset($_POST['uname']) && isset($_POST['password'])
 	$pass = validate($_POST['password']);
 
 	$re_pass = validate($_POST['re_password']);
-	$name = validate($_POST['name']);
 
-	$user_data = 'uname='. $uname. '&name='. $name;
+	$user_data = 'uname='. $uname;
 
 
 	if (empty($uname)) {
@@ -32,12 +31,6 @@ if (isset($_POST['uname']) && isset($_POST['password'])
         header("Location: signup.php?error=Re Password is required&$user_data");
 	    exit();
 	}
-
-	else if(empty($name)){
-        header("Location: signup.php?error=Name is required&$user_data");
-	    exit();
-	}
-
 	else if($pass !== $re_pass){
         header("Location: signup.php?error=The confirmation password  does not match&$user_data");
 	    exit();
@@ -46,7 +39,7 @@ if (isset($_POST['uname']) && isset($_POST['password'])
 	else{
 
 		// hashing the password
-        $pass = md5($pass);
+        $pass = password_hash($pass, PASSWORD_BCRYPT);
 
 	    $sql = "SELECT * FROM users WHERE user_name='$uname' ";
 		$result = mysqli_query($conn, $sql);
