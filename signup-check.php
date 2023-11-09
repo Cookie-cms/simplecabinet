@@ -1,66 +1,59 @@
-<?php 
-session_start(); 
-include "db_conn.php";
+<?php
+session_start();
+require "db_conn.php";
+ // Include Composer autoload file
 
-if (isset($_POST['uname']) && isset($_POST['password'])
-     && isset($_POST['re_password'])) {
+if (isset($_POST['uname']) && isset($_POST['password']) && isset($_POST['re_password'])) {
+    function validate($data){
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
 
-	function validate($data){
-       $data = trim($data);
-	   $data = stripslashes($data);
-	   $data = htmlspecialchars($data);
-	   return $data;
-	}
+    $uname = validate($_POST['uname']);
+    $pass = validate($_POST['password']);
+    $re_pass = validate($_POST['re_password']);
+    $user_data = 'uname='. $uname;
 
-	$uname = validate($_POST['uname']);
-	$pass = validate($_POST['password']);
+    if ($pass !== $re_pass) {
+        header("Location: signup.php?error=Passwords do not match&$user_data");
+        exit();
+    }
 
-	$re_pass = validate($_POST['re_password']);
+    // Generate UUID
+    $uuid = vsprintf( '%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex(random_bytes(16)), 4) ); // Generate a random UUID
 
-	$user_data = 'uname='. $uname;
+    $hashed_password = password_hash($pass, PASSWORD_BCRYPT);
 
+    try {
+        $stmt = $conn->prepare("SELECT * FROM users WHERE username=:uname");
+        $stmt->bindParam(':uname', $uname);
+        $stmt->execute();
 
-	if (empty($uname)) {
-		header("Location: signup.php?error=User Name is required&$user_data");
-	    exit();
-	}else if(empty($pass)){
-        header("Location: signup.php?error=Password is required&$user_data");
-	    exit();
-	}
-	else if(empty($re_pass)){
-        header("Location: signup.php?error=Re Password is required&$user_data");
-	    exit();
-	}
-	else if($pass !== $re_pass){
-        header("Location: signup.php?error=The confirmation password  does not match&$user_data");
-	    exit();
-	}
+        if ($stmt->rowCount() > 0) {
+            header("Location: signup.php?error=The username is taken, try another&$user_data");
+            exit();
+        } else {
+            $stmt = $conn->prepare("INSERT INTO users (uuid, username, password) VALUES (:uuid, :uname, :pass)");
+            $stmt->bindParam(':uuid', $uuid);
+            $stmt->bindParam(':uname', $uname);
+            $stmt->bindParam(':pass', $hashed_password);
+            $stmt->execute();
 
-	else{
-
-		// hashing the password
-        $pass = password_hash($pass, PASSWORD_BCRYPT);
-
-	    $sql = "SELECT * FROM users WHERE user_name='$uname' ";
-		$result = mysqli_query($conn, $sql);
-
-		if (mysqli_num_rows($result) > 0) {
-			header("Location: signup.php?error=The username is taken try another&$user_data");
-	        exit();
-		}else {
-           $sql2 = "INSERT INTO users(user_name, password, name) VALUES('$uname', '$pass', '$name')";
-           $result2 = mysqli_query($conn, $sql2);
-           if ($result2) {
-           	 header("Location: signup.php?success=Your account has been created successfully");
-	         exit();
-           }else {
-	           	header("Location: signup.php?error=unknown error occurred&$user_data");
-		        exit();
-           }
-		}
-	}
+            header("Location: signup.php?success=Your account has been created successfully");
+            exit();
+        }
+    }catch (PDOException $e) {
+		// Log the detailed error message to a file for debugging
+		error_log("PDOException: " . $e->getMessage(), 0);
 	
-}else{
-	header("Location: signup.php");
-	exit();
+		// Display a user-friendly error message
+		header("Location: signup.php?error=An error occurred during registration. Please try again later.&$user_data");
+		exit();
+	}
+} else {
+    header("Location: signup.php");
+    exit();
 }
+?>
