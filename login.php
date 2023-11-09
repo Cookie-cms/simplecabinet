@@ -25,7 +25,7 @@ if (isset($_POST['uname']) && isset($_POST['password'])) {
         $hashed_password = password_hash($pass, PASSWORD_BCRYPT);
 
         // Prepare the SQL statement with placeholders to prevent SQL injection
-        $stmt = $conn->prepare("SELECT * FROM users WHERE user_name = :uname");
+        $stmt = $conn->prepare("SELECT * FROM users WHERE username = :uname");
         $stmt->bindParam(':uname', $uname);
         $stmt->execute();
 
