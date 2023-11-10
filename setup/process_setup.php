@@ -7,9 +7,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $database = $_POST["database"];
     $type = $_POST["type"];
     $capetype = $_POST["capetype"]; 
-    $presetup = isset($_POST["presetup"]) ? $_POST["presetup"] : 0;
+    // $presetup = isset($_POST["presetup"]);
+    $presetup = true;
     $hwid = isset($_POST["hwid"]) ? $_POST["hwid"] : 0;
-
+    
     try {
         $conn = new PDO('mysql:host=' . $ip . ';port=' . $port, $username, $db_password);
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -39,6 +40,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $dbConnContent .= '    echo "Connection failed: " . $e->getMessage();' . PHP_EOL;
         $dbConnContent .= '}' . PHP_EOL;
         $dbConnContent .= '$registertype = "' . $type . '"; # 0 default 1 discrod-default 2 only discord 3 offline' . PHP_EOL;
+        if ($presetup) {
+            $dbConnContent .= '$minecraftsys = true; #FACK YOU DONT TOUCH THIS' . PHP_EOL;
+        } elseif (!$presetup) {
+            $dbConnContent .= '$minecraftsys = false; #FACK YOU DONT TOUCH THIS' . PHP_EOL;
+        }
         $dbConnContent .= '$capetype = "' . $capetype . '"; # 0 all can upload 1 upload with permissions 2 cape lib ' . PHP_EOL;
         $dbConnContent .= '?>';
 
