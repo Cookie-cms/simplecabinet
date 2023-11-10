@@ -5,7 +5,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $port = $_POST["port"];
     $db_password = $_POST["db_password"];
     $database = $_POST["database"];
-    $type = $_POST["type"]; 
+    $type = $_POST["type"];
+    $capetype = $_POST["capetype"]; 
     $presetup = isset($_POST["presetup"]) ? $_POST["presetup"] : 0;
     $hwid = isset($_POST["hwid"]) ? $_POST["hwid"] : 0;
 
@@ -38,6 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $dbConnContent .= '    echo "Connection failed: " . $e->getMessage();' . PHP_EOL;
         $dbConnContent .= '}' . PHP_EOL;
         $dbConnContent .= '$registertype = "' . $type . '"; # 0 default 1 discrod-default 2 only discord 3 offline' . PHP_EOL;
+        $dbConnContent .= '$capetype = "' . $capetype . '"; # 0 all can upload 1 upload with permissions 2 cape lib ' . PHP_EOL;
         $dbConnContent .= '?>';
 
         if (file_put_contents('../config.php', $dbConnContent)) {

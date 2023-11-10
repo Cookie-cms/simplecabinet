@@ -36,15 +36,17 @@
         <input type="text" name="database" required><br><br>
 
         <label>Useful for minecraft/gravitlauncher:</label>
-        <input type="checkbox" name="presetup" id="presetup" onchange="toggleHWIDSetup()"><br><br>
+        <input type="checkbox" name="presetup" id="presetup" checked disabled><br><br>
 
-        <div id="hwidSetupDiv" style="display: none;">
+        <div id="">
             <label>Setup hwid base:</label>
             <input type="checkbox" name="hwid"><br><br>
         </div>
         <label>type register:</label>
-        <input type="number" id="typeregister" name="typeregister" min="0" max="3" /><br><br>
+        <input type="number" id="typeregister" name="typeregister" min="0" max="3" value="0"/><br><br>
 
+        <label>type lib:</label>
+        <input type="number" id="capetype" name="capetype" min="0" max="2" value="0"/><br><br>
 
         <input type="submit" value="Next">
     </form>

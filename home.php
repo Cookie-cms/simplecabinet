@@ -25,19 +25,26 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
                         </div>
                     </div>
                     <div class="row mt-2">
-                        <div class="col-md-6"><input type="text" class="form-control" placeholder="Username" value="<?php echo $_SESSION['username']; ?>" disabled></div>
-                        <div class="col-md-6"><input type="text" class="form-control" placeholder="password" value="password" disabled></div>
+                        <div class="col-md-6"><label for="skin" class="form-label">Username:</label><input type="text" class="form-control" placeholder="Username" value="<?php echo $_SESSION['username']; ?>" disabled></div>
+                        <div class="col-md-6"><label for="skin" class="form-label">Password:</label><input type="text" class="form-control" placeholder="password" value="password" disabled></div>
                     </div>
                     <div class="row mt-3">
-                        <!-- <div class="col-md-6"><input type="text" class="form-control" value="+19685969668" placeholder="Phone number" disabled></div> -->
+                        <div class="col-md-6">
+                              <label for="skin" class="form-label">Skin:</label>
+                              <input class="form-control col-md-6" type="file" id="skin">
+                        </div>
+                        <div class="col-md-6">
+                              <label for="skin" class="form-label">Cape:</label>
+                              <input class="form-control col-md-6" type="file" id="skin">
+                        </div>
                     </div>
                     <div class="row mt-3">
-                    <form method="post">
+                        <form method="post">
                                                 <?php if($isDiscord): ?>	
                                                 <button type="button" class="btn btn-success" disabled>Success</button>
                                                 <?php else: ?>
                                                 <div class="col-sm-9 text-secondary">
-                                                <button type="submit" name="ds" value="ds" class="btn btn-danger" disabled>Connect</button>
+                                                <button type="submit" name="ds" value="ds" class="btn btn-danger">Connect</button>
                                                 <?php endif; ?>
                                             </form>
                     </div>    
