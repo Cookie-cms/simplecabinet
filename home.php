@@ -10,51 +10,54 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
      <!-- <link href="css/home.css"> -->
 	<title>HOME</title>
-	<!-- <link rel="stylesheet" type="text/css" href="style.css"> -->
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+     <link rel="stylesheet" href="css/home.css">
+
 </head>
 <body>
-     <div class="container rounded bg-white mt-5">
+                         <div class="container mt-3">
+                              <div class="form-check form-switch">
+                                   <input class="form-check-input " type="checkbox" id="themeSwitch">
+                                   <label class="form-check-label" for="themeSwitch">Toggle Dark Mode</label>
+                              </div>
+                         </div>
+     <div class="container rounded  mt-5">
+                         
         <div class="row">
             <div class="col-md-4 border-right">
                <canvas id="skin_container"></canvas>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-8 w-50">
                 <div class="p-3 py-5">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <div class="d-flex flex-row align-items-center back"><i class="fa fa-long-arrow-left mr-1 mb-1"></i>
-                        </div>
-                    </div>
-                    <div class="row mt-2">
+               </div>
+                    <div class="row mt-1">
                         <div class="col-md-6"><label for="skin" class="form-label">Username:</label><input type="text" class="form-control" placeholder="Username" value="<?php echo $_SESSION['username']; ?>" disabled></div>
-                        <div class="col-md-6"><label for="skin" class="form-label">Password:</label><input type="text" class="form-control" placeholder="password" value="password" disabled></div>
+                        <div class="col-md-6"><label for="skin" class="form-label">Password:</label><input type="password" class="form-control" placeholder="password" value="password" disabled></div>
                     </div>
-                    <div class="row mt-3">
+                    <div class="row mt-1">
                         <div class="col-md-6">
-                              <label for="skin" class="form-label">Skin:</label>
-                              <input class="form-control col-md-6" type="file" id="skin">
+                              <label for="skin" class="form-label ">Skin:</label>
+                              <input class="form-control col-md-6" type="file" id="skin" disabled>
                         </div>
                         <div class="col-md-6">
                               <label for="skin" class="form-label">Cape:</label>
-                              <input class="form-control col-md-6" type="file" id="skin">
+                              <input class="form-control col-md-6" type="file" id="skin" disabled>
                         </div>
                     </div>
                     <div class="row mt-3">
                         <form method="post">
-                                                <?php if($isDiscord): ?>	
-                                                <button type="button" class="btn btn-success" disabled>Success</button>
-                                                <?php else: ?>
-                                                <div class="col-sm-9 text-secondary">
-                                                <button type="submit" name="ds" value="ds" class="btn btn-danger">Connect</button>
-                                                <?php endif; ?>
+                                                <!-- <button type="button" class="btn btn-success" >Success</button> -->
+                                                <!-- <div class="col-sm-9 text-secondary"> -->
+                                                <button type="submit" name="ds" value="ds" class="btn btn-danger col-md-2" disabled>Connect discord</button>
                                             </form>
                     </div>    
-                    <div class="mt-5 text-right"><button class="btn btn-primary profile-button" type="button" disabled>Save Profile</button></div>
+                    <div class="mt-3 text-right"><button class="btn btn-primary profile-button col-md-2" type="button" disabled>Save Profile</button></div>
                 </div>
             </div>
         </div>
     </div>
 </body>
-<script src="skinview3d.bundle.js"></script>
+<script src="js/skinview3d.bundle.js"></script>
 <script>
 let skinViewer = new skinview3d.SkinViewer({
 		canvas: document.getElementById("skin_container"),
@@ -136,6 +139,9 @@ let skinViewer = new skinview3d.SkinViewer({
 //     }
 
 </script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/darktheme.js"></script>
 </html>
 
 <?php 

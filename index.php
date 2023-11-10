@@ -6,9 +6,8 @@
   <title>Register/Login Forms</title>
   <!-- Add Bootstrap CSS link -->
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="css/login_register.css">
-<script src="js/login_register.js"></script>
-
+  <link href="css/login_register.css" rel="stylesheet">
+    <script src="js/login_register.js" defer></script>
 </head>
 <body>
 <div class="form-structor">
