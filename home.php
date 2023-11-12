@@ -27,7 +27,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
             <div class="col-md-4 border-right">
                <canvas id="skin_container"></canvas>
             </div>
-            <div class="col-md-8 w-50">
+            <div class="col-md-8 ">
                 <div class="p-3 py-5">
                </div>
                     <div class="row mt-1">

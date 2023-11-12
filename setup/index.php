@@ -57,9 +57,9 @@
             <input type="text" name="database" required><br><br>
 
             <label>Useful for minecraft/gravitlauncher:</label>
-            <input type="checkbox" name="presetup" id="presetup" checked disabled><br><br>
+            <input type="checkbox" name="presetup" id="presetup" onchange="toggleHWIDSetup()"><br><br>
 
-            <div id="hwidSetupDiv">
+            <div id="hwidSetupDiv" style="display: none;">
                 <label>Setup hwid base:</label>
                 <input type="checkbox" name="hwid"><br><br>
             </div>
@@ -70,7 +70,13 @@
             <label>Type lib:</label>
             <input type="number" id="capetype" name="capetype" min="0" max="2" value="0"/><br><br>
 
-            <input type="hidden" name="setup_step" value="1">
+            <label>Themes:</label>
+                <select name="theme" id="themeselector" disabled><br><br>
+                    <option value="boostrap">Boostrap</option>
+                    <option value="terminall">Terminall</option>
+                    <option value="boom">Boom</option>
+                </select>
+            <!-- <input type="hidden" name="setup_step" value="1"> -->
             <button type="submit" class="btn btn-primary">Next</button>
         </form>
 

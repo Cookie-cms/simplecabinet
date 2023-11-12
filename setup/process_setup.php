@@ -55,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $dbConnContent .= '$capetype = "' . $capetype . '"; # 0 all can upload 1 upload with permissions 2 cape lib ' . PHP_EOL;
         $dbConnContent .= '?>';
 
-        if (file_put_contents('../config.php', $dbConnContent)) {
+        if (file_put_contents('../core/configs/config.inc.php', $dbConnContent)) {
             echo "db_conn.php created successfully<br>";
         } else {
             $alertDanger = "Error creating db_conn.php";
