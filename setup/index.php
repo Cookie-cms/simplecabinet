@@ -1,3 +1,25 @@
+<?php
+
+$configFile = '../core/configs/config.inc.php';
+
+if (file_exists($configFile)) {
+
+    try {
+      include $configFile; 
+    } catch (Exception $e) {
+      // Handle error
+    }
+  
+    if (!$development) {
+      header('Location: /');
+      exit;
+    }
+  
+  }
+  ?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

@@ -36,29 +36,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $conn->exec($importSql);
         echo "Example data imported successfully<br>";
 
-        $dbConnContent = '<?php' . PHP_EOL;
-        $dbConnContent .= '$sname= "' . $ip . '";' . PHP_EOL;
-        $dbConnContent .= '$uname= "' . $username . '";' . PHP_EOL;
-        $dbConnContent .= '$password = "' . $db_password . '";' . PHP_EOL;
-        $dbConnContent .= '$db_name = "' . $database . '";' . PHP_EOL;
-        $dbConnContent .= 'try{' . PHP_EOL;
-        $dbConnContent .= '$conn = new PDO("mysql:host=$sname;port=' . $port . ';dbname=$db_name", $uname, $password);' . PHP_EOL;
-        $dbConnContent .= '} catch (PDOException $e) {' . PHP_EOL;
-        $dbConnContent .= '    echo "Connection failed: " . $e->getMessage();' . PHP_EOL;
-        $dbConnContent .= '}' . PHP_EOL;
-        $dbConnContent .= '$registertype = "' . $type . '"; # 0 default 1 discrod-default 2 only discord 3 offline' . PHP_EOL;
-        if ($presetup) {
-            $dbConnContent .= '$minecraftsys = true; #FACK YOU DONT TOUCH THIS' . PHP_EOL;
-        } elseif (!$presetup) {
-            $dbConnContent .= '$minecraftsys = false; #FACK YOU DONT TOUCH THIS' . PHP_EOL;
-        }
-        $dbConnContent .= '$capetype = "' . $capetype . '"; # 0 all can upload 1 upload with permissions 2 cape lib ' . PHP_EOL;
-        $dbConnContent .= '?>';
+        $dbConnContent = <<<CONFIG
+        <?php
+
+        // Database credentials
+        $sname = "$ip";
+        $uname = "$username";
+        $password = "{$db_password}";
+        $db_name = "{$database}";
+
+        // Settings
+        $registertype = "{$type}"; 
+        $minecraftsys = $presetup ? 'true' : 'false';
+        $capetype = "{$capetype}";
+
+        // Other  
+        $modules = [];
+        $debugMode = false;
+        $development = false;
+
+        ?>
+        CONFIG;
 
         if (file_put_contents('../core/configs/config.inc.php', $dbConnContent)) {
-            echo "db_conn.php created successfully<br>";
+            echo "/core/configs/config.inc.php created successfully<br>";
         } else {
-            $alertDanger = "Error creating db_conn.php";
+            $alertDanger = "Error creating /core/configs/config.inc.php";
         }
 
         if ($presetup) {
